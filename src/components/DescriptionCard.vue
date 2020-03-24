@@ -2,14 +2,16 @@
 
     <div class="language">
         <a href="#" class="mb2">
-            <img class="language_image" src="https://pbs.twimg.com/profile_images/683949209050046464/-MWyJCb1.png" alt="">
+            <img class="language_image" :src=image alt="">
         </a>
 
-        <p class="language_name mb2">Elixir</p>
+        <div class="language_name mb2" :class="{underline}">
+            {{ languageName }}
+            <span class="check" v-if="languageName === 'Elixir'"> ✔ </span>
+        </div>
 
-        <div class="language_description">
-            <p> Elixir is a dynamic, functional language designed for building scalable and maintainable applications.</p>
-            <p> Elixir leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain.</p>
+        <div class="language_description" v-show="description">
+            {{ description }}
             <hr />
             <p class="language_more">READ MORE...</p>
         </div>
@@ -18,7 +20,29 @@
 </template>
 
 <script>
-export default {}
+export default {
+    props: {
+        underline: {
+            type: Boolean,
+            default: false
+        },
+        languageName: {
+            type: String,
+            default: "Elixir"
+        },
+        image: {
+            type: String,
+            default: "https://pbs.twimg.com/profile_images/683949209050046464/-MWyJCb1.png",
+            validator: function(value) {
+                return value.startsWith("http")
+            }
+        },
+        description: {
+            type: String,
+            default: "Elixir is a dynamic, functional language designed for building scalable and maintainable applications. Elixir leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain."
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -57,6 +81,15 @@ export default {}
 
 hr {
     border: 1px groove rgb(211, 211, 211);
+}
+
+.check {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.underline {
+    text-decoration: underline;
 }
 
 </style>
